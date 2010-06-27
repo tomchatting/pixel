@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	RewriteEngine	on
+	
+	RewriteCond		%{REQUEST_FILENAME} !-s
+	
+	RewriteRule		^(posts)(/.*)?$ 	index.php		[L]
+	RewriteRule		^(archive)		 	index.php		[L]
+</IfModule>

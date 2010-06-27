@@ -1,0 +1,12 @@
+title: Hello World!
+author: Thomas Chatting
+date: 27/06/2010
+
+<p>Hello World! This is Pxl, or Pixel, the tiny PHP text file based blog engine.</p>
+<p>Reasons why Pixel is cool:</p>
+<ul>
+	<li>It's tiny - currently 10kb!</li>
+	<li>It can be managed by FTP or by server-side admin!</li>
+	<li>No database required!</li>
+</ul>
+<p>Keep up to date with Pixel development (or Square development) at my blog, <a href="http://spoolio.co.cc">http://spoolio.co.cc</a></p>
