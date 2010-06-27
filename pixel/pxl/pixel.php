@@ -5,24 +5,23 @@ $m_time = $m_time[0] + $m_time[1];
 $starttime = $m_time;
 
 /*
-	Pixel Version 0.3
-
-	Desc:    Pixel is currently nothing more than glorified a technical demo
-	Author:  http://spoolio.co.cc/
-	Build:   0016
+	Pixel Version 0.4
+	Build 0020
 */
 
 // CONFIG
 
 // Some nice and easy variables
 // 		Your blog title
-$blog_title = "Pixel";
+$blog_title	 	= "Pixel";
 // 		A short description of your blog
-$blog_tag	= "A fantastic Pixel powered blog!";
+$blog_tag		= "A fantastic Pixel powered blog!";
 //		Whether your domain has .htaccess support or not
-$htaccess	= true;
+$htaccess		= true;
 //		The default author for posting when not specified
-$author		= "Your Name";
+$author			= "Your Name";
+//		How many posts to pull for the index page (default 5)
+$index_length 	= 5;
 
 // Leave this alone (unless you know what you're doing)
 define('DOMAIN', 	preg_replace('#^www\.#', '', $_SERVER['SERVER_NAME']));
@@ -31,7 +30,6 @@ define('VERSION', 	'0.3');
 
 $parsed = parse_pixel_url();
 
-// FUNCTIONS
 if ($_GET["delete"]) {
 	if(is_admin()){
 		$date = explode("/", $_GET["delete"]);
@@ -50,14 +48,14 @@ function blog_url()		{echo URL;}
 function blog_title()	{global $blog_title; echo $blog_title;}
 function style_url()	{echo URL.'pxl/style.css';}
 
-function articles($start_dir = 'posts') {
-	// returns an array of files in $start_dir (not recursive)
+function articles($start_dir = 'posts', $limit = -1) {
 	$files = array();
 	$dir = opendir($start_dir);
-	while(($myfile = readdir($dir)) !== false) {
-		if($myfile != '.' && $myfile != '..' && !is_file($myfile) && end(explode(".", $myfile)) == 'txt' && end(explode(".", $myfile)) != "old" ) {
+	while(($myfile = readdir($dir)) !== false && $limit <> 0) {
+		if($myfile != '.' && $myfile != '..' && !is_file($myfile) && end(explode(".", $myfile)) == 'txt' && end(explode(".", $myfile)) != "old") {
 			$myfile = substr($myfile, 0, strlen($myfile)-4);
 			$files[] = $myfile;
+			$limit = $limit - 1;
 		}
 	}
 	closedir($dir);
@@ -73,12 +71,14 @@ function unbound() {
 }
 
 function pixel_content() {
-	global $array;
+	global $array, $index_length;
 	$ring = parse_pixel_url();
 	$call = $ring[1];
 	if ($call == "index") {
-		$articles = articles();
-		$articles = array_slice($articles, 0, 5);
+		$articles = articles('posts', $index_length);
+		if (count($articles) == 0) {
+			echo '<p>No posts to display! :(</p>';
+		}
 		foreach ($articles as $article) {
 			$post = get_post('','','','',$article.'.txt');
 			if ($post[2] <= date("d/m/Y")) {
@@ -184,20 +184,24 @@ function parse_pixel_url() {
 function print_archive() {
 	echo "<h2>Archive</h2>";
 	$articles = articles();
-	foreach ($articles as $article) {
-		$post = get_post('','','','',$article.'.txt');
-		$post_array[end(explode("/", $post[2]))][] = array(date_published => $post[2], title => $post[0], uri => $post[4]);
-	}
-	echo '<div class="archives">';
-	foreach(array_keys($post_array) as $year) {
-		echo '<div class="year">'.$year.'</div>';
-		echo '<div class="posts">';
-		foreach($post_array[$year] as $item) {
-			echo '<p><a href="'.$item['uri'].'">'.$item['title'].'</a></p>'; 
+	if (count($articles) == 0) {
+		echo '<p>No posts to display! :(</p>';
+	} else {
+		foreach ($articles as $article) {
+			$post = get_post('','','','',$article.'.txt');
+			$post_array[end(explode("/", $post[2]))][] = array(date_published => $post[2], title => $post[0], uri => $post[4]);
 		}
-		echo "</div>";
+		echo '<div class="archives">';
+		foreach(array_keys($post_array) as $year) {
+			echo '<div class="year">'.$year.'</div>';
+			echo '<div class="posts">';
+			foreach($post_array[$year] as $item) {
+				echo '<p><a href="'.$item['uri'].'">'.$item['title'].'</a></p>'; 
+			}
+			echo "</div>";
+		}
+		echo '</div>';
 	}
-	echo '</div>';
 }
 
 function pixel_meta() {
