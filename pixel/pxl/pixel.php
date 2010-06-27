@@ -26,7 +26,7 @@ $index_length 	= 5;
 // Leave this alone (unless you know what you're doing)
 define('DOMAIN', 	preg_replace('#^www\.#', '', $_SERVER['SERVER_NAME']));
 define('URL', 		str_replace('index.php', '', 'http://'.DOMAIN.$_SERVER['SCRIPT_NAME']));
-define('VERSION', 	'0.3');
+define('VERSION', 	'0.4');
 
 $parsed = parse_pixel_url();
 
