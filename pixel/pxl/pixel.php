@@ -5,25 +5,29 @@ $m_time = $m_time[0] + $m_time[1];
 $starttime = $m_time;
 
 /*
-	Pixel Version 0
+	Pixel Version 0.3
 
 	Desc:    Pixel is currently nothing more than glorified a technical demo
 	Author:  http://spoolio.co.cc/
-	Build:   0015
+	Build:   0016
 */
 
 // CONFIG
 
 // Some nice and easy variables
-$blog_title = "Pixel";				// Your blog title
-$blog_tag	= "A fantastic Pixel powered blog!";	// A short description of your blog
-$htaccess	= true;					// Whether your domain has .htaccess support or not
-$author		= "Thomas Chatting";	// The default author for posting when not specified
+// 		Your blog title
+$blog_title = "Pixel";
+// 		A short description of your blog
+$blog_tag	= "A fantastic Pixel powered blog!";
+//		Whether your domain has .htaccess support or not
+$htaccess	= true;
+//		The default author for posting when not specified
+$author		= "Your Name";
 
 // Leave this alone (unless you know what you're doing)
 define('DOMAIN', 	preg_replace('#^www\.#', '', $_SERVER['SERVER_NAME']));
 define('URL', 		str_replace('index.php', '', 'http://'.DOMAIN.$_SERVER['SCRIPT_NAME']));
-define( 'VERSION', '0.3' );
+define('VERSION', 	'0.3');
 
 $parsed = parse_pixel_url();
 
@@ -39,25 +43,12 @@ if ($_GET["delete"]) {
 	}
 }
 
-function author() {
-	global $author;
-	echo $author;
-}
-
-function blog_desc() {
-	global $blog_tag;
-	echo $blog_tag;
-}
-
-function page_title() {
-	global $parsed;
-	echo $parsed[0];
-}
-
-function blog_title() {
-	global $blog_title;
-	echo $blog_title;
-}
+function author()		{global $author; echo $author;}
+function blog_desc()	{global $blog_tag; echo $blog_tag;}
+function page_title()	{global $parsed; echo $parsed[0];}
+function blog_url()		{echo URL;}
+function blog_title()	{global $blog_title; echo $blog_title;}
+function style_url()	{echo URL.'pxl/style.css';}
 
 function articles($start_dir = 'posts') {
 	// returns an array of files in $start_dir (not recursive)
@@ -115,10 +106,6 @@ function print_post($array) {
 	echo "</p>";
 	echo $array[3];
 	echo "</div>";
-}
-
-function blog_url() {
-	echo URL;
 }
 
 function get_post($year = '', $month = '', $day = '', $title = '', $url = '') {
@@ -234,8 +221,4 @@ function url($type) {
 		default:
 			echo URL;
 	}
-}
-
-function style_url() {
-	echo URL.'pxl/style.css';
 }
