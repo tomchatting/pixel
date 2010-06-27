@@ -29,8 +29,12 @@ I have provided a quick and dirty index page for you to look at and tinker with,
 
 ## Todo:
 * Provide an upload interface for posts
-* Allow for Disqus integration out of the box
+* Add Disqus integration out of the box
 * Add validation to the text parser
+* Add categories for posts ‡
+* Add pages support ‡
+
+‡ Feature will be added subject to not hindering performance
 
 # LICENSE
 Copyright (c) 2010 Thomas Chatting
