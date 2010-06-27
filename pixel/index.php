@@ -16,7 +16,7 @@
 		<?php pixel_content(); ?>
 		<?php $round = 5;$m_time = explode(" ",microtime()); $m_time = $m_time[0] + $m_time[1]; $endtime = $m_time; $totaltime = ($endtime - $starttime); ?>
 		<p class="footer"><em><?php echo "Page loaded in ". round($totaltime,$round) ." seconds"; ?></em></p>
-	</div class="content">
+	</div>
 	<div class="sidebar">
 		<h1>Huh?</h1>
 		<p>This is <?php blog_title(); ?>, a blog by <?php author();?> and best described as &ldquo;<?php blog_desc(); ?>&rdquo;.</p>
