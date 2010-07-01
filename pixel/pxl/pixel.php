@@ -6,20 +6,20 @@ $starttime = $m_time;
 
 /*
 	Pixel Version 0.4
-	Build 0020
+	Build 0021
 */
 
 // CONFIG
 
 // Some nice and easy variables
 // 		Your blog title
-$blog_title	 	= "Pixel";
+$blog_title	 	= "Pixel!";
 // 		A short description of your blog
 $blog_tag		= "A fantastic Pixel powered blog!";
 //		Whether your domain has .htaccess support or not
 $htaccess		= true;
 //		The default author for posting when not specified
-$author			= "Your Name";
+$author			= "Thomas Chatting";
 //		How many posts to pull for the index page (default 5)
 $index_length 	= 5;
 
@@ -29,17 +29,6 @@ define('URL', 		str_replace('index.php', '', 'http://'.DOMAIN.$_SERVER['SCRIPT_N
 define('VERSION', 	'0.4');
 
 $parsed = parse_pixel_url();
-
-if ($_GET["delete"]) {
-	if(is_admin()){
-		$date = explode("/", $_GET["delete"]);
-		$uri = $date[0].'/'.$date[1].'-'.$date[2].'-'.$date[3].'-'.$date[4];
-		if (file_exists($uri.'.txt')) {
-			rename($uri.'.txt', $uri.'.old');
-			header("Location: ./");
-		}
-	}
-}
 
 function author()		{global $author; echo $author;}
 function blog_desc()	{global $blog_tag; echo $blog_tag;}
@@ -81,7 +70,7 @@ function pixel_content() {
 		}
 		foreach ($articles as $article) {
 			$post = get_post('','','','',$article.'.txt');
-			if ($post[2] <= date("d/m/Y")) {
+			if (strtotime(date("Y-m-d",$post[2])) <= strtotime(date("Y-m-d"))) {
 				print_post($post);
 			}
 		}
