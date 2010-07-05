@@ -194,7 +194,7 @@ function print_archive() {
 }
 
 function pixel_meta() {
-	echo '<link rel="alternate" href="'; blog_url(); echo '" title="'; page_title(); echo '" type="application/atom+xml" />'.PHP_EOL;
+	echo '<link rel="alternate" href="'; url("feed"); echo '" title="'; page_title(); echo '" type="application/atom+xml" />'.PHP_EOL;
 	echo '<meta name="description" content="'; blog_desc(); echo '" />';
 }
 
