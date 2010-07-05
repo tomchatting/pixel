@@ -2,14 +2,14 @@
 include('pxl/pixel.php');
 
 $DateNow = date("d/m/Y");
-$updated = "01/01/1900";
+$updated = "1900-01-01";
 $articles = articles('posts', 10);
 foreach ($articles as $article) {
 	$post = get_post('','','','',$article.'.txt');
 	if (strtotime(date("Y-m-d",$post[2])) <= strtotime(date("Y-m-d"))) {
 		$blogPost[] = $post;
 	}
-	if (strtotime(date("Y-m-d",$post[2])) > $updated) {
+	if (strtotime(date("Y-m-d",$post[2])) > strtotime($updated)) {
 		$updated = date("Y-m-d",$post[2]);
 	}
 }
