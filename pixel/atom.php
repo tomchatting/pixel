@@ -6,11 +6,11 @@ $updated = "01/01/1900";
 $articles = articles('posts', 10);
 foreach ($articles as $article) {
 	$post = get_post('','','','',$article.'.txt');
-	if ($post[2] <= date("d/m/Y")) {
+	if (strtotime(date("Y-m-d",$post[2])) <= strtotime(date("Y-m-d"))) {
 		$blogPost[] = $post;
 	}
-	if ($post[2] > $updated) {
-		$updated = $post[2];
+	if (strtotime(date("Y-m-d",$post[2])) > $updated) {
+		$updated = date("Y-m-d",$post[2]);
 	}
 }
 $temp = explode("/", $updated);
