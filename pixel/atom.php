@@ -5,7 +5,7 @@ $DateNow = date("d/m/Y");
 $updated = "1900-01-01";
 $articles = articles('posts', 10);
 foreach ($articles as $article) {
-	$post = get_post('','','','',$article.'.txt');
+	$post = get_post($article.'.txt');
 	if (strtotime(date("Y-m-d",$post[2])) <= strtotime(date("Y-m-d"))) {
 		$blogPost[] = $post;
 	}
