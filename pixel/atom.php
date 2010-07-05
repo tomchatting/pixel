@@ -13,8 +13,6 @@ foreach ($articles as $article) {
 		$updated = date("Y-m-d",$post[2]);
 	}
 }
-$temp = explode("/", $updated);
-$updated = $temp[2]."-".$temp[1]."-".$temp[0];
 ?>
 <?php header("Content-type: text/xml"); ?>
 <?php echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>".PHP_EOL; ?>
