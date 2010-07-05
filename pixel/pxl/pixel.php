@@ -5,8 +5,8 @@ $m_time = $m_time[0] + $m_time[1];
 $starttime = $m_time;
 
 /*
-	Pixel Version 0.4
-	Build 0021
+	Pixel Version 0.5
+	Build 0026
 */
 
 // CONFIG
@@ -26,7 +26,7 @@ $index_length 	= 5;
 // Leave this alone (unless you know what you're doing)
 define('DOMAIN', 	preg_replace('#^www\.#', '', $_SERVER['SERVER_NAME']));
 define('URL', 		str_replace('index.php', '', 'http://'.DOMAIN.$_SERVER['SCRIPT_NAME']));
-define('VERSION', 	'0.4');
+define('VERSION', 	'0.5');
 
 $parsed = parse_pixel_url();
 
@@ -69,7 +69,7 @@ function pixel_content() {
 			echo '<p>No posts to display! :(</p>';
 		}
 		foreach ($articles as $article) {
-			$post = get_post('','','','',$article.'.txt');
+			$post = get_post($article.'.txt');
 			if (strtotime(date("Y-m-d",$post[2])) <= strtotime(date("Y-m-d"))) {
 				print_post($post);
 			}
@@ -77,7 +77,7 @@ function pixel_content() {
 		echo '<hr /><p class="archive">Missing something? Check the <a href="'; url("archive"); echo'">Archive</a></p>';
 	}
 	if ($call == "post") {
-		$array = get_post('','','','',$ring[2]);
+		$array = get_post($ring[2]);
 		print_post($array);
 	}
 	if ($call == "archive") {
@@ -97,11 +97,10 @@ function print_post($array) {
 	echo "</div>";
 }
 
-function get_post($year = '', $month = '', $day = '', $title = '', $url = '') {
-	if (!isset($url)) {
-		$url = 'posts/'.$year.'-'.$month.'-'.$day.'-'.$title.'.txt';
-	} else {
-		$url = 'posts/'.$url;
+function get_post($url = '') {
+	$url = 'posts/'.$url;
+	if (substr($url, -4, 4) <> '.txt') {
+		$url .= '.txt.';
 	}
 	
 	if (file_exists($url)){
@@ -148,11 +147,6 @@ function parse_pixel_url() {
 		$uri = substr($uri, 1); // If the first character of input is "/" this might break our array
 	}
 	$input = explode('/',$uri); // Creates an array
-
-	if ($uri[0] == '/') {
-		$uri = substr($uri, 1); // If the first character of input is "/" this might break our array
-	}
-	$input = explode('/',$uri); // Creates an array
 	
 	switch ($input[0]) {
 		case "posts":
@@ -177,7 +171,7 @@ function print_archive() {
 		echo '<p>No posts to display! :(</p>';
 	} else {
 		foreach ($articles as $article) {
-			$post = get_post('','','','',$article.'.txt');
+			$post = get_post($article.'.txt');
 			$post_array[end(explode("/", $post[2]))][] = array(date_published => $post[2], title => $post[0], uri => $post[4]);
 		}
 		echo '<div class="archives">';
