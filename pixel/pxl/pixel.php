@@ -6,7 +6,7 @@ $starttime = $m_time;
 
 /*
 	Pixel Version 0.6
-	Build 0035
+	Build 0036
 */
 
 // CONFIG
@@ -76,14 +76,14 @@ function pixel_content() {
 		echo '<hr /><p class="archive">Missing something? Check the <a href="'; url("archive"); echo'">Archive</a></p>';
 	}
 	if ($call == "post") {
-        global $twitter, $disqus;
+		global $twitter, $disqus;
 		$array = get_post($ring[2]);
 		print_post($array);
-        echo "<hr />";
-        echo "<div class='articleBottom'>";
-        if (!empty($twitter))  { echo '<script type="text/javascript">tweetmeme_url = \''.URL.$ht.$array[4].'\';tweetmeme_style = \'compact\';tweetmeme_source = \''. $twitter .'\';</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>'; }
-        if (!empty($disqus))   { echo '<div id="disqus_thread"></div><script type="text/javascript">(function() {var dsq = document.createElement(\'script\'); dsq.type = \'text/javascript\'; dsq.async = true;dsq.src = \'http://'.$disqus.'.disqus.com/embed.js\';(document.getElementsByTagName(\'head\')[0] || document.getElementsByTagName(\'body\')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript='.$disqus.'">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>'; echo '<script type="text/javascript">//<![CDATA[(function() {var links = document.getElementsByTagName(\'a\');var query = \'?\';for(var i = 0; i < links.length; i++) {if(links[i].href.indexOf(\'#disqus_thread\') >= 0) {query += \'url\' + i + \'=\' + encodeURIComponent(links[i].href) + \'&\';}}document.write(\'<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/'.$disqus.'/get_num_replies.js\' + query + \'"></\' + \'script>\');})();//]]></script>';}
-        echo "</div>";
+		echo "<hr />";
+		echo "<div class='articleBottom'>";
+		if (!empty($twitter))  { echo '<script type="text/javascript">tweetmeme_url = \''.URL.$ht.$array[4].'\';tweetmeme_style = \'compact\';tweetmeme_source = \''. $twitter .'\';</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>'; }
+		if (!empty($disqus))   { echo '<div id="disqus_thread"></div><script type="text/javascript">(function() {var dsq = document.createElement(\'script\'); dsq.type = \'text/javascript\'; dsq.async = true;dsq.src = \'http://'.$disqus.'.disqus.com/embed.js\';(document.getElementsByTagName(\'head\')[0] || document.getElementsByTagName(\'body\')[0]).appendChild(dsq);})();</script><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript='.$disqus.'">comments powered by Disqus.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>'; echo '<script type="text/javascript">//<![CDATA[(function() {var links = document.getElementsByTagName(\'a\');var query = \'?\';for(var i = 0; i < links.length; i++) {if(links[i].href.indexOf(\'#disqus_thread\') >= 0) {query += \'url\' + i + \'=\' + encodeURIComponent(links[i].href) + \'&\';}}document.write(\'<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/'.$disqus.'/get_num_replies.js\' + query + \'"></\' + \'script>\');})();//]]></script>';}
+		echo "</div>";
 	}
 	if ($call == "archive") {
 		print_archive();
@@ -91,10 +91,9 @@ function pixel_content() {
 }
 
 function print_post($array) {
-	global $htaccess, $twitter;
+	global $htaccess;
 	if ($htaccess == false) { $ht = "?/"; }
-	echo "<div class='article'><h1><a href=\"$ht$array[4]\">$array[0]</a>";
-    echo "</h1>";
+	echo "<div class='article'><h1><a href=\"$ht$array[4]\">$array[0]</a></h1>";
 	echo "<p class=\"meta\">";
 	if (!empty($array[1])) { echo "By ".$array[1].", "; } else { echo "By "; author(); echo ", "; }
 	if (!empty($array[2])) { echo " published on ".$array[2]; }
@@ -159,7 +158,7 @@ function parse_pixel_url() {
 			$input = substr($input, 6);
 			$url = $input.'.txt';
 			$page_title = $blog_title;
-            $title = get_post($url);
+			$title = get_post($url);
 			return array($page_title.' - '.$title[0], "post", $url);
 			break;
 		case "archive":
